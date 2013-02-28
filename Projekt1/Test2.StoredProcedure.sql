@@ -1,5 +1,5 @@
 
-		(vlasdasd
+		(Wichtige Änderung für beide
 			select
 				null
 			from 
