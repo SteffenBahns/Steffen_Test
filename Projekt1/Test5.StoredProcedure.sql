@@ -1,9 +1,4 @@
-t
-
--- 26.10.2011: für die Berechnung von DB1 müssen
--- Kostensätze von MDM ermittelt werden
--- Filterung erfolgt über Name und ID
--- Shipping Cost
+Änderungeng
 DECLARE @fShippingCost float
 SELECT @fShippingCost = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
