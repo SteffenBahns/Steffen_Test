@@ -3,19 +3,7 @@ t''
 -- 26.10.2011: für die Berechnung von DB1 müssen
 -- Kostensätze von MDM ermittelt werden
 -- Filterung erfolgt über Name und ID
--- Shipping Cost
-DECLARE @fShippingCost float
-SELECT @fShippingCost = [Kostensatz]
-FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Shipping Cost'' 
-AND ID=7293
--- Material costs
-DECLARE @fPickMatCost float
-SELECT @fPickMatCost = [Kostensatz]
-FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Pick & Materialkosten pro AK''
-AND id = 7294
--- Return costs
+--
 DECLARE @fReturnCost float
 SELECT @fReturnCost = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
@@ -31,9 +19,7 @@ AND id = 7296
 DECLARE @fDWLicCharge float
 SELECT @fDWLicCharge = [Kostensatz] 
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''DW License Charge''
-AND id = 7297
--- MOS License Charge
+WHERE [Kostenarthxcasuduadfvuh
 DECLARE @fMOSLicCharge float
 SELECT @fMOSLicCharge = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
