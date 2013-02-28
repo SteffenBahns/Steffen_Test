@@ -1,5 +1,6 @@
 
 GO Hallo Steffen
+ABCDE
 SET QUOTED_IDENTIFIER ON
 GO Hallo
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_ODS_FACT_LAGER_WE_SONST]') AND type in (N'P', N'PC'))
