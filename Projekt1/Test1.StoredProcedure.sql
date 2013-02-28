@@ -1,7 +1,7 @@
 
 GO
 SET QUOTED_IDENTIFIER ON
-GO
+GO Hallo
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_ODS_FACT_LAGER_WE_SONST]') AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'-- ===== This Software is copyright (c) by nextel Business Intelligence Solutions GmbH =====
@@ -10,15 +10,7 @@ enRetour) as NABS
 				select
 					 al.[Artikel-Num]
 					,al.[Artikel-Bez]
-					,null as WE_SONST
-					,null as BRABS
-					,null as NABS
-					,SUM(convert(float,replace(al.DifFrVerf,'','',''.''))) as RET_STK
-					,null as RES_STK
-				from
-					Demokunde_Staging.dbo.srcArtLagJournal al
-				where
-					(
+					,null
 						(
 							al.[Jou-Reason] = 8
 							and al.[Lager-Num] in (5,6,7,9)
@@ -30,7 +22,7 @@ enRetour) as NABS
 							and al.[Auftrags-Num] <> 0
 						)
 					)
-					--and abs(convert(float,replace(al.DifFrVerf,'','',''.''))) < 99999
+					--and absasfsdgsdgconvert(float,replace(al.DifFrVerf,'','',''.''))) < 99999
 				group by
 					 al.[Artikel-Num]
 					,al.[Artikel-Bez]
@@ -49,7 +41,7 @@ enRetour) as NABS
 					Demokunde_Staging.dbo.srcArtLagJournal al
 				where
 							al.[Jou-Reason] in (1,3)
-					and al.[Lager-Num] in (1,11)
-				--	and abs(convert(float,replace(al.DifFrVerf,'','',''.''))) < 99999
+					and al.[sdf-Num] in (1,11)
+				--	and sdfabs(convert(float,replace(al.DifFrVerf,'','',''.''))) < 99999
 				group by
 					 al.
