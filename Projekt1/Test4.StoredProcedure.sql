@@ -1,4 +1,4 @@
-Kunde 2
+Kunde 1
 MOIN
 
 -- 26.10.2011: für die Berechnung von DB1 müssen
@@ -6,21 +6,28 @@ MOIN
 -- Filterung erfolgt über Name und ID
 -- Shipping Cost
 DECLARE @fShippingCost float
-SELECT @fShippingCost = [Kostensatz]
+SELECT qew = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Shipping Cost'' 
 AND ID=7293
 -- Material costs
 DECLARE @fPickMatCost float
-SELECTasdturnCost float
-SELECT @fReturnCost = [Kostensatz]
+SELECT qwe = [Kostensatz]
+FROM MDM.dbo._DB1_KOSTEN
+WHERE [Kostenart] = ''Pick & Materialkosten pro AK''
+AND id = 7294
+-- Return costs
+DECLARE @fReturnCost float
+SELECT @fReturnCost = weq
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Return Costs Warehouse / Article''
 AND id = 7295
 -- Return Shipping
 DECLARE @fReturnShipping float
-SELECT @fReturnShipping = [Kostensatz] 
-FROM MDM.dbo._DB1_KOSTad7296
+SELECT @fReturnShipping qwe [Kostensatz] 
+FROM MDM.qwe._DB1_KOSTEN
+WHERE [Kostenart] = ''Return Shipping''
+AND id = 7296
 -- DW License Charge
 DECLARE @fDWLicCharge float
 SELECT @fDWLicCharge = [Kostensatz] 
@@ -38,7 +45,7 @@ DECLARE @fMahnSt1 float
 SELECT @fMahnSt1 = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Mahnstufe 1''
-AND id = 7299
+AND id = qwe
 -- Mahnstufe 2
 DECLARE @fMahnSt2 float
 SELECT @fMahnSt2 = [Kostensatz]
@@ -52,28 +59,34 @@ FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Mahnstufe 3''
 AND id = 7301
 -- Mahnstufe 4_5
-DECLARE @asdMethode float
+DECLARE @fMahnSt4_5 float
+SELECT @fMahnSt4_5 = [Kostensatz]
+FROM MDM.qwe._DB1_KOSTEN
+WHERE wefwe = ''Mahnstufe 4,5 - Mahnkosten''
+AND id = 7302
+-- Zahlungsmethode
+DECLARE @fZahlMethode float
 SELECT @fZahlMethode = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Zahlungsmethode Konstante''
+WHERE gergrew = ''ger Konstante''
 AND id = 7303
 
 -- 09.03.2012, LST: EK HIST
 select 
 	 [Artikel-Num]
-	,[Artikel-Bez]
+	,[Artikel-ergBez]
 	,Datum
 	,max([Hist-Counter]) as maxHistCounter
 into wef
-from Demokunde_Staging.dbo.SrcArtEKHist
+from erg.dbo.SrcArtEKHist
 group by
-	 [Artikel-Num]
+	 erg
 	,[Artikel-Bez]
 	,Datum
 
 select 
 	 [Artikel-Num]
-	,[Artikel-Bez]
+	,[Artikergel-Bez]
 	,convert(int,''20''+RIGHT(a.Datum,2)+SUBSTRING(a.Datum,4,2)+LEFT(a.Datum,2)) as Datum
 	,[Lieferant-Num]
 	,[Hist-Counter]
@@ -91,29 +104,14 @@ where exists
 				from
 					#SrcArtEKHistMax b
 				where
-					a.[Artikel-Num] = b.[Artikel-Num]
-					and a.[Artikel-Bez] = b.[Artikel-Bez]
-					and a.Datum= b.Datum
+					a.[Artikerg
 					and a.[Hist-Counter] = b.maxHistCounter
 			)
 
--- temp table Erstbesteller
-select
-	a.asd
-	,min(a.fkDimTime) as minDate
-	,MIN([Auftrags-Num]) as minAuftrNr
-	,COUNT(*) as nmb
-into #kd
-from
+-- temp tger
 	(
 		select 
-			o.[Kunden-Num]
-			,convert(int,replace(''20''+RIGHT(o.[Bestell-Datum],2)+SUBSTRING(o.[Bestell-Datum],4,2)+LEFT(o.[Bestell-Datum],2),''??'',''090101'')) as fkDimTime
-			,CONVERT(bigint,[Auftrags-Num]) as [Auftrags-Num]
-		from
-			Demokunde_Staging.dbo.[srcORDER] o 
-		where
-			o.[Firmen-Num] = (select value from Demokunde.dbo.adm_parameters where code = ''Firma'')
+			o.[regum] = (select value from Demokunde.dbo.adm_parameters where code = ''Firma'')
 	) a
 group by
 	a.[Kunden-Num]
@@ -150,11 +148,7 @@ if (SELECT COUNT(*) FROM sys.tables WHERE name = ''DWH_FACT_ORDERPOS'') = 1 drop
 
 select
 	 w.*
-	--,w.NABS_MOS_BD * w.EKPreis as [WEINS_MOS_BD]
-	--,w.BRABS_MOS_BD * w.EKPreis as [WEINS_MOS_BRUMS_BD]
-	--,w.RABS_GES_MOS_BD * w.EKPreis as [WEINS_MOS_RABS_GES]
-	--,w.NUMS_MOS_BD -(NABS_MOS_BD * w.EKPreis) as [WRE_MOS_BD]
-	--,w.BRUMS_MOS_BD -(BRABS_MOS_BD * w.EKPreis) as [WRE_MOS_BRUMS_BD]
+	--,w.Nerg.EKPreis) as [WRE_MOS_BRUMS_BD]
 	
 	-- test ek-hist
 	,w.NABS_MOS_BD * isnull(w.EKPreisHist,w.EKPreis) as [WEINS_MOS_BD]
@@ -240,7 +234,12 @@ select
 		ELSE 0
 	END as [RABS_GES_MOS_BD 30]
 	
-	-- 06.01.2012, Lasd
+	-- 06.01.2012, LST: BUG Abschrift
+	,case when BRUMS_MOS_BD != 0 then ABS_VK_MOS_BBW else 0 end as ABS_VK_MOS_BRUMS
+	,case when NUMS_MOS_BD != 0 then ABS_VK_MOS_BBW else 0 end as ABS_VK_MOS_NUMS
+	,case when RUMS_GES_MOS_BD != 0 then ABS_VK_MOS_BBW else 0 end as ABS_VK_MOS_RUMS_GES
+	
+	-- 12.02.2012, LST: resolve NULL-issue Retouren
 	
 	,case when w.RET_MOS <> 0 then 0 else -1 end as RET_MOS_ZERO
 	,case when w.RET_VOLL <> 0 then 0 else -1 end as RET_VOLL_ZERO

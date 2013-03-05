@@ -1,4 +1,4 @@
-Kunde 2
+Kunde 1
 GO Bonjour Steffen
 SET QUOTED_IDENTIFIER ON
 GO Hallo
@@ -13,7 +13,7 @@ enRetour) as NABS
 					,null
 						(
 							al.[Jou-Reason] = 8
-							and al.[2-Num] in (5,6,7,9)
+							and al.[Lager-Num] in (5,6,7,9)
 						)
 						or
 						(
@@ -22,24 +22,24 @@ enRetour) as NABS
 							and al.[Auftrags-Num] <> 0
 						)
 					)
-					--and fqwe(float,replace(al.DifFrVerf,'','',''.''))) < 99999
+					--and absasfsdgsdgconvert(float,replace(al.DifFrVerf,'','',''.''))) < 99999
 				group by
 					 al.[Artikel-Num]
-					,al.[Artikel-Bez]
+					,.[Artikel-Bez]
 
 				--RES_STK
 				union all
 				select
 					 al.[Artikel-Num]
 					,al.[Artikel-Bez]
-					If 
+					,null as WE_SONST
 					,null as BRABS
 					,null as NABS
 					,null as RET_STK
-					,SUM(conve1e2fFrVerf,'','',''.''))) as RES_STK
+					,SUM(convert(float,replace(al.DifFrVerf,'','',''.''))) as RES_STK
 				from
-					Demokunde_Staging.dbo.srcArtLagJournal al
+					csdisd.dbo.srcArtLagJournal al
 				where
-							al.[Jou-Reason] in (1,3)
-					and al.[sdf-Num] in (1,11)
+							al.[Jc sdfsdfsedfou-Reason] in (1,3)
+					and al.[sdfsregfrsgbgvesNum] in (1,11)
 				

@@ -1,4 +1,4 @@
-Kunde 2
+Kunde1
 		(Wichtige Änderung für beide
 			select
 				null
@@ -16,11 +16,11 @@ into #tmp
 from 
 	Demokunde_staging.dbo.[srcOrder] o
 group by
-	o.[Kunden-Num]
-count ad....
+	o.asd
+count having....
 into #res03
 from 
-	Demokunde_DWH.dbo.[srcKunGutschein] kg
+	Demokunde_DWH.dbo.ads kg
 	join #tmp t
 		on kg.asd = t.[Kunden-Num]
 where
