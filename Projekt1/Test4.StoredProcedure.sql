@@ -1,4 +1,4 @@
-t''
+Hallo
 
 -- 26.10.2011: für die Berechnung von DB1 müssen
 -- Kostensätze von MDM ermittelt werden
@@ -49,7 +49,7 @@ AND id = 7299
 DECLARE @fMahnSt2 float
 SELECT @fMahnSt2 = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Mahnstufe 2''
+WHERE iaoifdoiaenfqeoifiwe = ''Mahnstufe 2''
 AND id = 7300
 -- Mahnstufe 3
 DECLARE @fMahnSt3 float
@@ -61,7 +61,7 @@ AND id = 7301
 DECLARE @fMahnSt4_5 float
 SELECT @fMahnSt4_5 = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Mahnstufe 4,5 - Mahnkosten''
+WHERE wefwe = ''Mahnstufe 4,5 - Mahnkosten''
 AND id = 7302
 -- Zahlungsmethode
 DECLARE @fZahlMethode float
@@ -76,7 +76,7 @@ select
 	,[Artikel-Bez]
 	,Datum
 	,max([Hist-Counter]) as maxHistCounter
-into #SrcArtEKHistMax
+into wef
 from Demokunde_Staging.dbo.SrcArtEKHist
 group by
 	 [Artikel-Num]
