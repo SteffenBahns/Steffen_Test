@@ -27,14 +27,7 @@ enRetour) as NABS
 					 al.[Artikel-Num]
 					,al.[Artikel-Bez]
 
-				--RES_STK
-				union all
-				select
 					 al.[Artikel-Num]
-					,al.[Artikel-Bez]
-					If 
-					,null as BRABS
-					,null as NABS
 					,null as RET_STK
 					,SUM(convert(float,replace(al.DifFrVerf,'','',''.''))) as RES_STK
 				from

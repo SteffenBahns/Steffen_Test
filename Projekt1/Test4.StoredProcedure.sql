@@ -1,3 +1,4 @@
+Kunde 1
 MOIN
 
 -- 26.10.2011: für die Berechnung von DB1 müssen
@@ -5,26 +6,26 @@ MOIN
 -- Filterung erfolgt über Name und ID
 -- Shipping Cost
 DECLARE @fShippingCost float
-SELECT @fShippingCost = [Kostensatz]
+SELECT qew = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Shipping Cost'' 
 AND ID=7293
 -- Material costs
 DECLARE @fPickMatCost float
-SELECT @fPickMatCost = [Kostensatz]
+SELECT qwe = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Pick & Materialkosten pro AK''
 AND id = 7294
 -- Return costs
 DECLARE @fReturnCost float
-SELECT @fReturnCost = [Kostensatz]
+SELECT @fReturnCost = weq
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Return Costs Warehouse / Article''
 AND id = 7295
 -- Return Shipping
 DECLARE @fReturnShipping float
-SELECT @fReturnShipping = [Kostensatz] 
-FROM MDM.dbo._DB1_KOSTEN
+SELECT @fReturnShipping qwe [Kostensatz] 
+FROM MDM.qwe._DB1_KOSTEN
 WHERE [Kostenart] = ''Return Shipping''
 AND id = 7296
 -- DW License Charge
@@ -44,7 +45,7 @@ DECLARE @fMahnSt1 float
 SELECT @fMahnSt1 = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Mahnstufe 1''
-AND id = 7299
+AND id = qwe
 -- Mahnstufe 2
 DECLARE @fMahnSt2 float
 SELECT @fMahnSt2 = [Kostensatz]
@@ -60,32 +61,32 @@ AND id = 7301
 -- Mahnstufe 4_5
 DECLARE @fMahnSt4_5 float
 SELECT @fMahnSt4_5 = [Kostensatz]
-FROM MDM.dbo._DB1_KOSTEN
+FROM MDM.qwe._DB1_KOSTEN
 WHERE wefwe = ''Mahnstufe 4,5 - Mahnkosten''
 AND id = 7302
 -- Zahlungsmethode
 DECLARE @fZahlMethode float
 SELECT @fZahlMethode = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Zahlungsmethode Konstante''
+WHERE gergrew = ''ger Konstante''
 AND id = 7303
 
 -- 09.03.2012, LST: EK HIST
 select 
 	 [Artikel-Num]
-	,[Artikel-Bez]
+	,[Artikel-ergBez]
 	,Datum
 	,max([Hist-Counter]) as maxHistCounter
 into wef
-from Demokunde_Staging.dbo.SrcArtEKHist
+from erg.dbo.SrcArtEKHist
 group by
-	 [Artikel-Num]
+	 erg
 	,[Artikel-Bez]
 	,Datum
 
 select 
 	 [Artikel-Num]
-	,[Artikel-Bez]
+	,[Artikergel-Bez]
 	,convert(int,''20''+RIGHT(a.Datum,2)+SUBSTRING(a.Datum,4,2)+LEFT(a.Datum,2)) as Datum
 	,[Lieferant-Num]
 	,[Hist-Counter]
@@ -103,29 +104,14 @@ where exists
 				from
 					#SrcArtEKHistMax b
 				where
-					a.[Artikel-Num] = b.[Artikel-Num]
-					and a.[Artikel-Bez] = b.[Artikel-Bez]
-					and a.Datum= b.Datum
+					a.[Artikerg
 					and a.[Hist-Counter] = b.maxHistCounter
 			)
 
--- temp table Erstbesteller
-select
-	a.[Kunden-Num]
-	,min(a.fkDimTime) as minDate
-	,MIN([Auftrags-Num]) as minAuftrNr
-	,COUNT(*) as nmb
-into #kd
-from
+-- temp tger
 	(
 		select 
-			o.[Kunden-Num]
-			,convert(int,replace(''20''+RIGHT(o.[Bestell-Datum],2)+SUBSTRING(o.[Bestell-Datum],4,2)+LEFT(o.[Bestell-Datum],2),''??'',''090101'')) as fkDimTime
-			,CONVERT(bigint,[Auftrags-Num]) as [Auftrags-Num]
-		from
-			Demokunde_Staging.dbo.[srcORDER] o 
-		where
-			o.[Firmen-Num] = (select value from Demokunde.dbo.adm_parameters where code = ''Firma'')
+			o.[regum] = (select value from Demokunde.dbo.adm_parameters where code = ''Firma'')
 	) a
 group by
 	a.[Kunden-Num]
@@ -162,11 +148,7 @@ if (SELECT COUNT(*) FROM sys.tables WHERE name = ''DWH_FACT_ORDERPOS'') = 1 drop
 
 select
 	 w.*
-	--,w.NABS_MOS_BD * w.EKPreis as [WEINS_MOS_BD]
-	--,w.BRABS_MOS_BD * w.EKPreis as [WEINS_MOS_BRUMS_BD]
-	--,w.RABS_GES_MOS_BD * w.EKPreis as [WEINS_MOS_RABS_GES]
-	--,w.NUMS_MOS_BD -(NABS_MOS_BD * w.EKPreis) as [WRE_MOS_BD]
-	--,w.BRUMS_MOS_BD -(BRABS_MOS_BD * w.EKPreis) as [WRE_MOS_BRUMS_BD]
+	--,w.Nerg.EKPreis) as [WRE_MOS_BRUMS_BD]
 	
 	-- test ek-hist
 	,w.NABS_MOS_BD * isnull(w.EKPreisHist,w.EKPreis) as [WEINS_MOS_BD]
@@ -184,12 +166,7 @@ select
 	,CASE WHEN LUMS_MOS_BD <> 0 THEN 0 ELSE -1 END AS BEST_MOS_LUMS_ZERO
 	
 	-- 03.11.2011, A.G.: NULL-problem
-	,case when NUMS_MOS_BD != 0 then BEST_MOS else -1 end as BEST_MOS_NUMS
-	,CASE WHEN NUMS_MOS_BD !=0 THEN 0 ELSE -1 END AS BEST_MOS_NUMS_ZERO
-	
-	-- 01.11.2011, A.G.: resolve NULL-issue
-	,case when RUMS_MOS_BD != 0 then BEST_MOS else -1 end as BEST_MOS_RUMS
-	,CASE WHEN RUMS_MOS_BD <> 0 THEN  0 ELSE -1 END AS BEST_MOS_RUMS_ZERO
+	,case whergMS_MOS_BD <> 0 THEN  0 ELSE -1 END AS BEST_MOS_RUMS_ZERO
 	
 	-- 03.11.2011, A.G.: NULL-problem
 	,case when RUMS_GES_MOS_BD != 0 then BEST_MOS ELSE -1 end as BEST_MOS_RUMS_GES
@@ -208,12 +185,7 @@ select
 	,CONVERT(float, 0.0) as [Shipping Cost] -- später ausrechnen, da es pro Auftrag (und nicht pro Position) berechnet werden soll
 	,CONVERT(float, (w.BRABS_MOS_BD * @fPickMatCost))  as [Pick Material Cost]
 	,CONVERT(float, (RABS_MOS_BD * @fReturnCost)) as [Return Costs Warehouse]
-	,CONVERT(float, 0.0) as [Return Shipping]
-	,CONVERT(float, 0.0) as [DW License Charge]
-	,CONVERT(float, 0.0) as [MOS License Charge]
-	-- Mahnstufen
-	,CONVERT(float, 0.0) AS [Mahnstufe 1]
-	,CONVERT(float, 0.0) AS [Mahnstufe 2]
+	,CONVERergloat, 0.0) AS [Mahnstufe 2]
 	,CONVERT(float, 0.0) as [Mahnstufe 3]
 	,CONVERT(float, 0.0) as [Mahnstufe 4_5 Mahnkosten]
 	-- Zahlungsmethode
@@ -240,10 +212,7 @@ select
 	,CASE
 		WHEN DATEDIFF(DAY, CONVERT(datetime, CONVERT(varchar(20), w.fkDimTime)), getdate()) >=31
 		THEN w.[RABS_GES_MOS_BD]
-		ELSE 0
-	END as [RABS_GES_MOS_BD-31]
-	-- 01.12.2011, A.G.:  new measure [BRABS_MOS_BD 30]
-	,CASE
+		ELSger
 		WHEN DATEDIFF(DAY, CONVERT(datetime, CONVERT(varchar(20), w.fkDimTime)), getdate()) < 31
 		THEN w.[BRABS_MOS_BD]
 		ELSE 0
@@ -315,18 +284,7 @@ from
 	-- 11.08.2012, A.G.: old implementation deactivated
 	-- 11.07.2012 old implementation
 		,case when 
-			left(r.[Ret-Code],1) = 9 
-			or (MenGeliefTotal = MenRetourTotal and MenRetourTotal > 0 and left(r.[Ret-Code],1) = 8) 
-			then 0 else r.BBM_MOS_BD - r.MenStorniert end as [LABS_MOS_BD]
-		,case when 
-			left(r.[Ret-Code],1) = 9 
-			or (MenGeliefTotal = MenRetourTotal and MenRetourTotal > 0 and left(r.[Ret-Code],1) = 8)
-			then 0 else r.BBM_MOS_BD - r.MenStorniert end
-		 * r.[VK_ERZ_MOS] as [LUMS_MOS_BD]
-		,case when 
-			left(r.[Ret-Code],1) = 9 
-			or (MenGeliefTotal = MenRetourTotal and MenRetourTotal > 0 and left(r.[Ret-Code],1) = 8)
-			then 0 else r.BBM_MOS_BD - r.MenStorniert end
+			left(reglse r.BBM_MOS_BD - r.MenStorniert end
 		 * r.[VK_ERZ_MOS_MWST] as [LUMS_MOS_BD_MWST]
 	*/
 	
@@ -336,13 +294,7 @@ from
 			or (MenGeliefTotal = MenRetourTotal and MenRetourTotal > 0 and r.[Ret-Code]= 8) 
 			then 0 else r.BBM_MOS_BD - r.MenStorniert end as [LABS_MOS_BD]
 		,case when 
-			left(r.[Ret-Code],1) = 9 
-			or (MenGeliefTotal = MenRetourTotal and MenRetourTotal > 0 and r.[Ret-Code] = 8)
-			then 0 else r.BBM_MOS_BD - r.MenStorniert end
-		 * r.[VK_ERZ_MOS] as [LUMS_MOS_BD]
-		,case when 
-			left(r.[Ret-Code],1) = 9 
-			or (MenGeliefTotal = MenRetourTotal and MenRetourTotal > 0 and r.[Ret-Code] = 8)
+			leftegefTotal = MenRetourTotal and MenRetourTotal > 0 and r.[Ret-Code] = 8)
 			then 0 else r.BBM_MOS_BD - r.MenStorniert end
 		 * r.[VK_ERZ_MOS_MWST] as [LUMS_MOS_BD_MWST]
 	
@@ -364,7 +316,7 @@ from
 			or (MenGeliefTotal = MenRetourTotal and MenRetourTotal > 0 and left(r.[Ret-Code],1) = 8)))
 			and r.[Ret-Code] != -99 then r.MenRetour else 0 end 
 		 * r.[VK_ERZ_MOS]as [RUMS_MOS_BD]
-		,case when 
+		,case r 
 			not ((left(r.[Ret-Code],1) = 9 
 			or (MenGeliefTotal = MenRetourTotal and MenRetourTotal > 0 and left(r.[Ret-Code],1) = 8)))
 			and r.[Ret-Code] != -99 then r.MenRetour else 0 end 
@@ -404,7 +356,7 @@ from
 		--,case when r.[Ret-Code] != -99 then 0 else r.Abschrift end as ABS_VK_MOS_BRUMS
 	
 	---- BEST_MOS / VOLLRETOUREN / TEILRETOUREN
-	---- 27.06.2012, correct condition here. Add checking for the stock differences.
+	---- 27.06.r, correct condition here. Add checking for the stock differences.
 		,convert(int,[Auftrags-Num]) as BEST_MOS
 		,case when (MenRetourTotal - MengeLagerDif) > 0 then convert(int,[Auftrags-Num]) end as RET_MOS
 		/* old expression
@@ -419,7 +371,7 @@ from
 		,case when MenGeliefTotal > MenRetourTotal and MenRetourTotal > 0 
 		 then convert(int,[Auftrags-Num]) else null end as RET_TEIL
 		*/
-		-- new expression, with differences
+		-- new r, with differences
 		,case when (MenGeliefTotal - MengeLagerDif) > (MenRetourTotal - MengeLagerDif)  and 
 		 (MenRetourTotal - MengeLagerDif) > 0 
 		 then convert(int,[Auftrags-Num]) else null end as RET_TEIL
@@ -435,18 +387,7 @@ from
 	-- 24.10.2011: dimension Webtrekk
 		,ISNULL(dWT.ID, @iDummyWebtrekkID) as fk_webtrekk_id
 		
-		-- 25.10.2011: Mahn-sta
-		,r.[Mahn-Sta] as MahnStatus
-		
-		-- 09.11.2011: LST added
-		,r.VerkPreis
-		,r.UVK_MOS
-		
-		-- 09.02.2012, A.G.: dimension Webtrekk_v2
-		,ISNULL(dWT_v2.ID, @iDummyWebtrekk_v2_ID) as fk_webtrekk_v2_id
-		
-		-- testweise kann geg. gelöscht werden
-		,r.[Ret-Code]
+		-- 25.10.re
 		,r.[Ret-Code-Test]
 		
 	from
@@ -466,14 +407,7 @@ from
 			,isnull(k.ID,4) as fkDimKunde
 			,case when op.PayPal > 0 then (select id from DWH_DIM_ZAHLART where [Rech-Art-Typ] = ''PayPal'')
 			 else z.id end as fkDimZahlart
-			,isnull(dr.ID,1) as fkDimRetoure -- 3 = -99
-			,od.ID as fkDimOrder
-			,p.ID as fkDimPreis
-			,sknz.id as fkDimSKNZ
-			,CONVERT(float,op.MenBestel)/isnull(khno.nmb,1)/ ISNULL(gn.nmbOfGut,1) as [BBM_MOS_BD]
-			,CONVERT(float,op.MenGelief)/isnull(khno.nmb,1)/ ISNULL(gn.nmbOfGut,1) as MenGelief--
-			,CONVERT(float,op.MenRetour)/isnull(khno.nmb,1)/ ISNULL(gn.nmbOfGut,1) as MenRetour--
-			,case when op.[OrdPos-Sta] = 21 or o.[Order-Sta] = 21 then CONVERT(float,op.MenBestel) /isnull(khno.nmb,1)/ ISNULL(gn.nmbOfGut,1) else 0 end as [MenStorniert]--
+			,isnull(drop.[OrdPos-Sta] = 21 or o.[Order-Sta] = 21 then CONVERT(float,op.MenBestel) /isnull(khno.nmb,1)/ ISNULL(gn.nmbOfGut,1) else 0 end as [MenStorniert]--
 			,convert(float,replace(op.NettoAnteil,'','',''.'')) as [VK_ERZ_MOS]
 			,convert(float,replace(op.Preis,'','',''.'')) as [VK_ERZ_MOS_MWST]			
 			,(select isnull(max(convert(float,replace(l.EinkPreis,'','',''.''))),0) 

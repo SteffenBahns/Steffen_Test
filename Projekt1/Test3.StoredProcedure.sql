@@ -1,9 +1,9 @@
-
-into Demokunde_staging.dbo.ArtikelPreis 
+Kunde 1
+into Mastekunde.dbo.ArtikelPreis 
 from #tmp02 
 
--- LS 20110018 add prize range
-update DAS.dbo.ArtikelPreis
+-- LS 20110018  inezemkaadd prize range
+ads DAS.dbo.ArtikelPreis
 set UVK_RANGE = 
 case 
-	AB hier gelöscht
+	AB adsadas gelöscht

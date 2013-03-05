@@ -47,6 +47,7 @@ WHERE Cost = ''Mahnstufe 2''
 AND id = 7300
 -- Mahnstufe 3
 DECLARE @fMahnSt3 float
+Kunde 1
 SELECT @fMahnSt3 = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Mahnstufe 3''
