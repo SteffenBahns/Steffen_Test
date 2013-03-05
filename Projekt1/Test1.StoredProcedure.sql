@@ -1,9 +1,8 @@
 
-GO Hallo Steffen
-ABCDE
+GO Bonjour Steffen
 SET QUOTED_IDENTIFIER ON
 GO Hallo
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_ODS_FACT_LAGER_WE_SONST]') AND type in (N'P', N'PC'))
+IF Arbeit im SkriptS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_ODS_FACT_LAGER_WE_SONST]') AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'-- ===== This Software is copyright (c) by nextel Business Intelligence Solutions GmbH =====
 enRetour) as NABS
@@ -33,7 +32,7 @@ enRetour) as NABS
 				select
 					 al.[Artikel-Num]
 					,al.[Artikel-Bez]
-					,null as WE_SONST
+					If 
 					,null as BRABS
 					,null as NABS
 					,null as RET_STK
@@ -43,6 +42,4 @@ enRetour) as NABS
 				where
 							al.[Jou-Reason] in (1,3)
 					and al.[sdf-Num] in (1,11)
-				--	and sdfabs(convert(float,replace(al.DifFrVerf,'','',''.''))) < 99999
-				group by
-					 al.
+				

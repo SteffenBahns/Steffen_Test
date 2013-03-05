@@ -10,7 +10,7 @@
 
 -- temp res03
 select 
-	o.[Kunden-Num]
+	o.Name
 	,max(o.[Auftrags-Num]) as [Auftrags-Num]
 into #tmp
 from 
@@ -20,7 +20,7 @@ group by
 count having....
 into #res03
 from 
-	Demokunde_staging.dbo.[srcKunGutschein] kg
+	Demokunde_DWH.dbo.[srcKunGutschein] kg
 	join #tmp t
 		on kg.[Kunden-Num] = t.[Kunden-Num]
 where
