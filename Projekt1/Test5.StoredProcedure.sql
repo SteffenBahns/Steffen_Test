@@ -55,7 +55,7 @@ AND id = 7301
 DECLARE @fMahnSt4_5 float
 SELECT @fMahnSt4_5 = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Mahnstufe 4,5 - Mahnkosten''
+WHERE [Kostenart] = ''Mahnstufe 1,2 - Mahnkosten''
 AND id = 7302
 -- Payment
 DECLARE @fZahlMethode float
@@ -113,61 +113,4 @@ into #kd
 from
 	(
 		select 
-			o.[Kunden-Num]
-			,convert(int,replace(''20''+RIGHT(o.[Bestell-Datum],2)+SUBSTRING(o.[Bestell-Datum],4,2)+LEFT(o.[Bestell-Datum],2),''??'',''090101'')) as fkDimTime
-			,CONVERT(bigint,[Auftrags-Num]) as [Auftrags-Num]
-		from
-			asd.dbo.[srcORDER] o 
-		where
-			o.[Firmen-Num] = (select value from Demokunde.dbo.adm_parameters where code = ''Firma'')
-	) a
-group by
-	a.[Kunden-Num]
-
--- temp mbf of kh datasets
-select
-	kh.[Firmen-Num]
-	,kh.[Auftrags-Num]
-	,kh.[Order-Count]
-	,COUNT(*) as nmb
-into #khNo
-from
-	Demokunde_Staging.dbo.srcKonHist kh
-where
-	kh.[Kon-Code] in (98,109,971,972,973 , 48,159,974,975,976)
-group by
-	kh.[Firmen-Num]
-	,kh.[Auftrags-Num]
-	,kh.asd 
-
--- temp nmb of gutsch datasets
-select
-	a.[Auftrags-Num]
-	,COUNT(*) as nmbOfGut
-into #GutschNmb
-from
-	Demokunde_Staging.dbo.GutscheinCodes a
-group by
-	a.[Auftrags-Num]
-
-
-if (SELECT COUNT(*) FROM sys.tables WHERE name = ''DWH_FACT_ORDERPOS'') = 1 drop table DWH_FACT_ORDERPOS
-
-
-select
-	 w.*
-	--,w.NABS_MOS_BD * w.EKPreis as [WEINS_MOS_BD]
-	--,w.asd * w.EKPreis as [WEINS_MOS_BRUMS_BD]
-	--,w.RABS_GES_MOS_BD * w.EKPreis as [WEINS_MOS_RABS_GES]
-	--,w.NUMS_MOS_BD -(NABS_MOS_BD * w.EKPreis) as [WRE_MOS_BD]
-	--,w.BRUMS_MOS_BD -(BRABS_MOS_BD * w.EKPreis) as [WRE_MOS_BRUMS_BD]
-	
-	-- test ek-hist
-	,w.NABS_MOS_BD * isnull(w.EKPreisHist,w.EKPreis) as [WEINS_MOS_BD]
-	,w.BRABS_MOS_BD * isnull(w.EKPreisHist,w.EKPreis) as [WEINS_MOS_BRUMS_BD]
-	,w.RABS_GES_MOS_BD * isnull(w.EKPreisHist,w.EKPreis) as [WEINS_MOS_RABS_GES]
-	,w.NUMS_MOS_BD -(NABS_MOS_BD * isnull(w.EKPreisHist,w.EKPreis)) as [WRE_MOS_BD]
-	,w.BRUMS_MOS_BD -(asd * isnull(w.EKPreisHist,w.EKPreis)) as [WRE_MOS_BRUMS_BD]
-	
-	
-	Bis nur noch bis hier hier
+		Anpassungen
