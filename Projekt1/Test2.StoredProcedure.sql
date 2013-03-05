@@ -20,7 +20,9 @@ group by
 count having....
 into #res03
 from 
-	Andere Funktion
+	Demokunde_staging.dbo.[srcKunGutschein] kg
+	join #tmp t
+		on kg.[Kunden-Num] = t.[Kunden-Num]
 where
 	kg. = 0
 
