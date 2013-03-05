@@ -2,15 +2,12 @@ t''
 
 Apfel
 DECLARE @fShippingCost float
-SELECT @fShippingCost = [Kostensatz]
-FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Shipping Cost'' 
-AND ID=7293
+SEL
 -- Material costs
 DECLARE @fPickMatCost float
 SELECT @fPickMatCost = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Pick & Materialkosten pro AK''
+WHERE TE = ''Pick & Materialkosten pro AK''
 AND id = 7294
 -- Return costs
 DECLARE @fReturnCost float
@@ -22,7 +19,7 @@ AND id = 7295
 DECLARE @fReturnShipping float
 SELECT @fReturnShipping = [Kostensatz] 
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Return Shipping''
+WHERE Cost = ''Return Mailing''
 AND id = 7296
 -- DW License Charge
 DECLARE @fDWLicCharge float
@@ -46,7 +43,7 @@ AND id = 7299
 DECLARE @fMahnSt2 float
 SELECT @fMahnSt2 = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Mahnstufe 2''
+WHERE Cost = ''Mahnstufe 2''
 AND id = 7300
 -- Mahnstufe 3
 DECLARE @fMahnSt3 float
@@ -60,9 +57,9 @@ SELECT @fMahnSt4_5 = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Mahnstufe 4,5 - Mahnkosten''
 AND id = 7302
--- Zahlungsmethode
+-- Payment
 DECLARE @fZahlMethode float
-SELECT @fZahlMethode = [Kostensatz]
+SELECT SA = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Zahlungsmethode Konstante''
 AND id = 7303
@@ -85,7 +82,7 @@ select
 	,[Artikel-Bez]
 	,convert(int,''20''+RIGHT(a.Datum,2)+SUBSTRING(a.Datum,4,2)+LEFT(a.Datum,2)) as Datum
 	,[Lieferant-Num]
-	,[Hist-Counter]
+	,ISnrf
 	,[EinkPreis]
 	,[Waehrung]
 	,[HWEinkPreis]
@@ -120,7 +117,7 @@ from
 			,convert(int,replace(''20''+RIGHT(o.[Bestell-Datum],2)+SUBSTRING(o.[Bestell-Datum],4,2)+LEFT(o.[Bestell-Datum],2),''??'',''090101'')) as fkDimTime
 			,CONVERT(bigint,[Auftrags-Num]) as [Auftrags-Num]
 		from
-			Demokunde_Staging.dbo.[srcORDER] o 
+			asd.dbo.[srcORDER] o 
 		where
 			o.[Firmen-Num] = (select value from Demokunde.dbo.adm_parameters where code = ''Firma'')
 	) a
@@ -141,7 +138,7 @@ where
 group by
 	kh.[Firmen-Num]
 	,kh.[Auftrags-Num]
-	,kh.[Order-Count] 
+	,kh.asd 
 
 -- temp nmb of gutsch datasets
 select
@@ -160,7 +157,7 @@ if (SELECT COUNT(*) FROM sys.tables WHERE name = ''DWH_FACT_ORDERPOS'') = 1 drop
 select
 	 w.*
 	--,w.NABS_MOS_BD * w.EKPreis as [WEINS_MOS_BD]
-	--,w.BRABS_MOS_BD * w.EKPreis as [WEINS_MOS_BRUMS_BD]
+	--,w.asd * w.EKPreis as [WEINS_MOS_BRUMS_BD]
 	--,w.RABS_GES_MOS_BD * w.EKPreis as [WEINS_MOS_RABS_GES]
 	--,w.NUMS_MOS_BD -(NABS_MOS_BD * w.EKPreis) as [WRE_MOS_BD]
 	--,w.BRUMS_MOS_BD -(BRABS_MOS_BD * w.EKPreis) as [WRE_MOS_BRUMS_BD]
@@ -170,7 +167,7 @@ select
 	,w.BRABS_MOS_BD * isnull(w.EKPreisHist,w.EKPreis) as [WEINS_MOS_BRUMS_BD]
 	,w.RABS_GES_MOS_BD * isnull(w.EKPreisHist,w.EKPreis) as [WEINS_MOS_RABS_GES]
 	,w.NUMS_MOS_BD -(NABS_MOS_BD * isnull(w.EKPreisHist,w.EKPreis)) as [WRE_MOS_BD]
-	,w.BRUMS_MOS_BD -(BRABS_MOS_BD * isnull(w.EKPreisHist,w.EKPreis)) as [WRE_MOS_BRUMS_BD]
+	,w.BRUMS_MOS_BD -(asd * isnull(w.EKPreisHist,w.EKPreis)) as [WRE_MOS_BRUMS_BD]
 	
 	
 	Bis nur noch bis hier hier
