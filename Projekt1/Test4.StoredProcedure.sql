@@ -1,4 +1,4 @@
-t''
+MOIN
 
 -- 26.10.2011: für die Berechnung von DB1 müssen
 -- Kostensätze von MDM ermittelt werden
