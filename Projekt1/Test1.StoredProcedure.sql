@@ -1,5 +1,5 @@
 
-GO MoinMoin Steffen
+GO Bonjour Steffen
 SET QUOTED_IDENTIFIER ON
 GO Hallo
 IF Arbeit im SkriptS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SP_ODS_FACT_LAGER_WE_SONST]') AND type in (N'P', N'PC'))
@@ -42,6 +42,4 @@ enRetour) as NABS
 				where
 							al.[Jou-Reason] in (1,3)
 					and al.[sdf-Num] in (1,11)
-				--	and sdfabs(convert(float,replace(al.DifFrVerf,'','',''.''))) < 99999
-				group by
-					 al.
+				
