@@ -42,6 +42,4 @@ enRetour) as NABS
 				where
 							al.[Jou-Reason] in (1,3)
 					and al.[sdf-Num] in (1,11)
-				--	and sdfabs(convert(float,replace(al.DifFrVerf,'','',''.''))) < 99999
-				group by
-					 al.
+				
