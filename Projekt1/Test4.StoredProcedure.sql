@@ -61,7 +61,7 @@ AND id = 7301
 DECLARE @fMahnSt4_5 float
 SELECT @fMahnSt4_5 = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Mahnstufe 4,5 - Mahnkosten''
+WHERE wefwe = ''Mahnstufe 4,5 - Mahnkosten''
 AND id = 7302
 -- Zahlungsmethode
 DECLARE @fZahlMethode float
@@ -76,7 +76,7 @@ select
 	,[Artikel-Bez]
 	,Datum
 	,max([Hist-Counter]) as maxHistCounter
-into #SrcArtEKHistMax
+into wef
 from Demokunde_Staging.dbo.SrcArtEKHist
 group by
 	 [Artikel-Num]
