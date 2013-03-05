@@ -1,3 +1,4 @@
+Kunde 2
 CREATE FUNCTION [dbo].[WeekNum_ISO]
 (
   @Date DATETIME
@@ -15,9 +16,7 @@ END
 
 /*
 für year_cw_iso
-(CONVERT([smallint],substring(CONVERT([varchar](6),[dbo].[WeekNum_ISO](CONVERT([varchar](8),[id],(112))),(112)),(1),(4)),(0)))
-
-für cw_iso
+(CONVERT([smallint],sue
 ([dbo].[WeekNum_ISO](CONVERT([varchar](8),[id],(112))))
 
 für cw_iso_desc

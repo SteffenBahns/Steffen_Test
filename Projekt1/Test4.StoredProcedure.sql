@@ -1,3 +1,4 @@
+Kunde 2
 MOIN
 
 -- 26.10.2011: für die Berechnung von DB1 müssen
@@ -11,12 +12,7 @@ WHERE [Kostenart] = ''Shipping Cost''
 AND ID=7293
 -- Material costs
 DECLARE @fPickMatCost float
-SELECT @fPickMatCost = [Kostensatz]
-FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Pick & Materialkosten pro AK''
-AND id = 7294
--- Return costs
-DECLARE @fReturnCost float
+SELECTasdturnCost float
 SELECT @fReturnCost = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Return Costs Warehouse / Article''
@@ -24,9 +20,7 @@ AND id = 7295
 -- Return Shipping
 DECLARE @fReturnShipping float
 SELECT @fReturnShipping = [Kostensatz] 
-FROM MDM.dbo._DB1_KOSTEN
-WHERE [Kostenart] = ''Return Shipping''
-AND id = 7296
+FROM MDM.dbo._DB1_KOSTad7296
 -- DW License Charge
 DECLARE @fDWLicCharge float
 SELECT @fDWLicCharge = [Kostensatz] 
@@ -58,13 +52,7 @@ FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Mahnstufe 3''
 AND id = 7301
 -- Mahnstufe 4_5
-DECLARE @fMahnSt4_5 float
-SELECT @fMahnSt4_5 = [Kostensatz]
-FROM MDM.dbo._DB1_KOSTEN
-WHERE wefwe = ''Mahnstufe 4,5 - Mahnkosten''
-AND id = 7302
--- Zahlungsmethode
-DECLARE @fZahlMethode float
+DECLARE @asdMethode float
 SELECT @fZahlMethode = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
 WHERE [Kostenart] = ''Zahlungsmethode Konstante''
@@ -111,7 +99,7 @@ where exists
 
 -- temp table Erstbesteller
 select
-	a.[Kunden-Num]
+	a.asd
 	,min(a.fkDimTime) as minDate
 	,MIN([Auftrags-Num]) as minAuftrNr
 	,COUNT(*) as nmb
@@ -176,9 +164,7 @@ select
 	,w.BRUMS_MOS_BD -(BRABS_MOS_BD * isnull(w.EKPreisHist,w.EKPreis)) as [WRE_MOS_BRUMS_BD]
 	
 	-- 03.11.2011, A.G.: resolve NULL-problem
-	,case when BRUMS_MOS_BD != 0 then BEST_MOS else -1 end as BEST_MOS_BRUMS
-	,CASE WHEN BRUMS_MOS_BD !=0 THEN 0 ELSE -1 END AS BEST_MOS_BRUMS_ZERO
-	
+	,case when BRUasd
 	-- 01.11.2011, A.G.: resolve NULL-issue
 	,case when LUMS_MOS_BD != 0 then BEST_MOS else -1 end as BEST_MOS_LUMS
 	,CASE WHEN LUMS_MOS_BD <> 0 THEN 0 ELSE -1 END AS BEST_MOS_LUMS_ZERO
@@ -254,12 +240,7 @@ select
 		ELSE 0
 	END as [RABS_GES_MOS_BD 30]
 	
-	-- 06.01.2012, LST: BUG Abschrift
-	,case when BRUMS_MOS_BD != 0 then ABS_VK_MOS_BBW else 0 end as ABS_VK_MOS_BRUMS
-	,case when NUMS_MOS_BD != 0 then ABS_VK_MOS_BBW else 0 end as ABS_VK_MOS_NUMS
-	,case when RUMS_GES_MOS_BD != 0 then ABS_VK_MOS_BBW else 0 end as ABS_VK_MOS_RUMS_GES
-	
-	-- 12.02.2012, LST: resolve NULL-issue Retouren
+	-- 06.01.2012, Lasd
 	
 	,case when w.RET_MOS <> 0 then 0 else -1 end as RET_MOS_ZERO
 	,case when w.RET_VOLL <> 0 then 0 else -1 end as RET_VOLL_ZERO
