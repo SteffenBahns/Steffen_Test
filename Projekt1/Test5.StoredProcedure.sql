@@ -1,6 +1,6 @@
 t''
 
-Birne
+Apfel
 DECLARE @fShippingCost float
 SELECT @fShippingCost = [Kostensatz]
 FROM MDM.dbo._DB1_KOSTEN
